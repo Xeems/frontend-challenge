@@ -1,22 +1,14 @@
 import CatList from "@/components/CatList";
-
-const headers = new Headers({
-  "Content-Type": "application/json",
-  "x-api-key": `${process.env.CAT_API_KEY}`
-});
-
+import { GetCats } from "@/lib/utils";
 
 export default async function Home() {
-  const respone = await fetch("https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&order=RANDOM&page=0&limit=30", {
-    method: "GET",
-    headers: headers,
-  })
+  const parsedCats = await GetCats({limit: 30})
 
-  const data = await respone.json()
+  if(!parsedCats.success) return(<span>Что то пошло не так.</span>)
 
   return (
     <main >
-      <CatList cats={data}/>
+      <CatList cats={parsedCats.data}/>
     </main>
   );
 }
