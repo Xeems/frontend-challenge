@@ -10,7 +10,7 @@ const navLinks = [
 export default function Header() {
     const path = usePathname()
   return (
-    <header className='h-16 bg-[#2196f3] flex items-center px-17'>
+    <header className='h-16 bg-[#2196f3] flex items-center md:px-17'>
         <nav className='flex flex-row h-full'>
             {navLinks.map((link) => {
                 const isActive = path === link.href;
