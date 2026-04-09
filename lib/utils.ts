@@ -7,7 +7,19 @@ type GetCatsProps ={
     limit?: number
 }
 
-export async function GetCats({ page = 0, limit = 6 }: GetCatsProps = {}){
+type GetCatsSuccess = {
+  success: true
+  data: CatType[]
+}
+
+type GetCatsError = {
+  success: false
+  error: string
+}
+
+type GetCatsResult = GetCatsSuccess | GetCatsError
+
+export async function GetCats({ page = 0, limit = 6 }: GetCatsProps = {}): Promise<GetCatsResult>{
     const headers = new Headers({
         "Content-Type": "application/json",
         "x-api-key": `${process.env.CAT_API_KEY}`
@@ -36,6 +48,7 @@ export async function GetCats({ page = 0, limit = 6 }: GetCatsProps = {}){
         console.error(e)
         return {
             success: false,
+            error: ''
         }
     }
 }
