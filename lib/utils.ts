@@ -1,6 +1,7 @@
 import { CatsArraySchema, } from "@/@types/CatType";
 import clsx from "clsx";
 import { ClassNameValue, twMerge } from "tailwind-merge";
+import { CatType } from "@/@types/CatType";
 
 type GetCatsProps ={
     page?: number,

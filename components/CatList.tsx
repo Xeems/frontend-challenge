@@ -37,7 +37,6 @@ export default function CatList({cats, variant = 'default'} : CatListProps) {
             })
             setPage(prev => prev + 1)
         }
-        else setError('Ошибка загрузки котиков.')
     }
 
   return (
