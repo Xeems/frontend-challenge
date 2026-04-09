@@ -22,20 +22,23 @@ export default function CatList({cats, variant = 'default'} : CatListProps) {
 
     useIntersectionObserver({
         targetRef: observerRef,
-        onIntersect: async () => {
-            const result = await GetCats({ page })
-
-            if (result.success) {
-                setCatsList(prev => {
-                    const newCats = result.data.filter(
-                        newCat => !prev.some(cat => cat.id === newCat.id)
-                    )
-                    return [...prev, ...newCats]
-                })
-                setPage(prev => prev + 1)
-            }
-        }
+        onIntersect: async () => await loadMoreCats()
     })
+
+    const loadMoreCats = async() => {
+        const result = await GetCats({ page })
+
+        if (result.success) {
+            setCatsList(prev => {
+                const newCats = result.data.filter(
+                    newCat => !prev.some(cat => cat.id === newCat.id)
+                )
+                return [...prev, ...newCats]
+            })
+            setPage(prev => prev + 1)
+        }
+        else setError('Ошибка загрузки котиков.')
+    }
 
   return (
     <div className='flex flex-col justify-center m-[55px]'>
